@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
- 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import SearchBar from './components/SearchBar';
 import ProfileOverview from './components/ProfileOverview';
 import RepoCard from './components/RepoCard';
 import Followers from './components/Followers';
 import Following from './components/Following';
 import ErrorMessage from './components/ErrorMessage';
+import Home from './components/Home';
+import About from './components/About';
 
 const App = () => {
   const [username, setUsername] = useState('');
@@ -31,13 +34,13 @@ const App = () => {
       const [repoRes, followerRes, followingRes] = await Promise.all([
         fetch(user.repos_url),
         fetch(user.followers_url),
-        fetch(`https://api.github.com/users/${username}/following`)
+        fetch(`https://api.github.com/users/${username}/following`),
       ]);
 
       const [repos, followers, following] = await Promise.all([
         repoRes.json(),
         followerRes.json(),
-        followingRes.json()
+        followingRes.json(),
       ]);
 
       setUserData(user);
@@ -51,39 +54,22 @@ const App = () => {
 
   return (
     <div className="container mt-4">
-      <SearchBar onSearch={fetchGitHubData} />
-      <ErrorMessage message={error} />
-      {userData && <ProfileOverview user={userData} />}
-      {repos.length > 0 && <RepoCard repos={repos} />}
-      {followers.length > 0 && <Followers users={followers} />}
-      {following.length > 0 && <Following users={following} />}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home onSearch={fetchGitHubData} />} />
+          <Route path="/profile" element={<ProfileOverview user={userData} />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+
+        <SearchBar onSearch={fetchGitHubData} />
+        <ErrorMessage message={error} />
+        {userData && <ProfileOverview user={userData} />}
+        {repos.length > 0 && <RepoCard repos={repos} />}
+        {followers.length > 0 && <Followers users={followers} />}
+        {following.length > 0 && <Following users={following} />}
+      </Router>
     </div>
   );
 };
- 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import Home from './Home'; 
-import ProfileOverview from './ProfileOverview';
-import About from './About';
-
-
-function App() {
-  
-
-  return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<ProfileOverview />}/>
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </Router>
-
-    </div>
-  )
-}
- 
 
 export default App;
