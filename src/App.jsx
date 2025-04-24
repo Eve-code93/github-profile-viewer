@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Layout from './components/Layout';
+//import Layout from './components/Layout';
 import SearchBar from './components/SearchBar';
 import ErrorMessage from './components/ErrorMessage';
 import Home from './components/Home';
@@ -11,6 +11,8 @@ import RepoCard from './components/RepoCard';
 import Followers from './components/Followers';
 import Following from './components/Following';
 import About from './components/About';
+import Layout from "./components/Layout";
+import NavBar from './components/NavBar';
 
 function App() {
   const [username, setUsername] = useState('');
