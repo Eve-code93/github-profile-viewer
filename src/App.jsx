@@ -9,6 +9,7 @@ import Following from './components/Following';
 import ErrorMessage from './components/ErrorMessage';
 import Home from './components/Home';
 import About from './components/About';
+import NavBar from './components/NavBar';
 
 const App = () => {
   const [username, setUsername] = useState('');
@@ -55,6 +56,7 @@ const App = () => {
   return (
     <div className="container mt-4">
       <Router>
+      <NavBar />
         <Routes>
           <Route path="/" element={<Home onSearch={fetchGitHubData} />} />
           <Route path="/profile" element={<ProfileOverview user={userData} />} />
