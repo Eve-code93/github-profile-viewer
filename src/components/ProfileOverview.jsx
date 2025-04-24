@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfileOverview = ({ user }) => {
+const ProfileOverview = ({ user, history }) => {
   if (!user) return null;
 
   return (
@@ -16,6 +16,17 @@ const ProfileOverview = ({ user }) => {
       <a href={user.html_url} target="_blank" rel="noopener noreferrer">
         Visit Profile
       </a>
+      {/*search history */}
+      {history?.length > 0 && (
+        <div className="mt-4">
+          <h5>Search History</h5>
+          <ul>
+            {history.map((u, i) => (
+              <li key={i}>{u}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
