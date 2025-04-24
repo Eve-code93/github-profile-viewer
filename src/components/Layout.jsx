@@ -1,4 +1,5 @@
 import React from 'react';
+import NavBar from './NavBar'; //
 
 /**
  * Layout component serves as the overall wrapper for pages.
@@ -18,6 +19,7 @@ const Layout = ({ children }) => {
           />
           <h1 className="ms-3 mb-0">GitHub Profile Viewer</h1>
         </div>
+        <NavBar />
       </header>
 
       {/* Main content area */}
