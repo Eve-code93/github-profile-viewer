@@ -1,47 +1,170 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Main Background */
+body {
+  background-color: #000000; /* Pure black */
+  color: #e6e6e6; /* Bright light gray for text */
+  min-height: 100vh;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
+/* Card Styling */
 .card {
-  padding: 2em;
+  background-color: #121212 !important; /* Slightly lighter than black */
+  border: 1px solid #333333 !important;
+  color: #ffffff !important; /* White text for cards */
 }
 
-.read-the-docs {
-  color: #888;
+/* Text Elements */
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff !important; /* White for headings */
 }
 
-footer {
-  font-size: 0.85rem;
-  color: #6c757d;
+p, span, small {
+  color: #e6e6e6 !important; /* Light gray for regular text */
+}
+
+/* Links */
+a {
+  color: #4dabf7 !important; /* Bright blue for links */
+}
+
+a:hover {
+  color: #74c0fc !important; /* Lighter blue on hover */
+}
+
+/* Input Fields */
+.form-control {
+  background-color: #121212 !important;
+  border: 1px solid #333333 !important;
+  color: #ffffff !important;
+}
+
+.form-control::placeholder {
+  color: #666666 !important; /* Darker placeholder text */
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #1a73e8 !important; /* Bright blue */
+  border-color: #1a73e8 !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: #1e88e5 !important;
+}
+
+/* List Items */
+.list-group-item {
+  background-color: #121212 !important;
+  border-color: #333333 !important;
+  color: #ffffff !important;
+}
+
+.list-group-item-action:hover {
+  background-color: #1e1e1e !important;
+}
+
+/* Nav Tabs */
+.nav-tabs {
+  border-bottom-color: #333333 !important;
+}
+
+.nav-tabs .nav-link {
+  color: #aaaaaa !important;
+}
+
+.nav-tabs .nav-link.active {
+  color: #ffffff !important;
+  border-bottom-color: #1a73e8 !important;
+}
+
+/* Badges */
+.badge {
+  color: white !important;
+}
+
+.bg-primary {
+  background-color: #1a73e8 !important;
+}
+
+/* Text Utilities */
+.text-muted {
+  color: #888888 !important; /* Gray for muted text */
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+/* Alert Styling */
+.alert {
+  background-color: #121212 !important;
+  border-color: #333333 !important;
+}
+
+.alert-warning {
+  color: #ffc107 !important; /* Yellow warning text */
+}
+
+.alert-danger {
+  color: #f44336 !important; /* Red danger text */
+}
+
+/* Dropdowns */
+.dropdown-menu {
+  background-color: #121212 !important;
+  border: 1px solid #333333 !important;
+}
+
+.dropdown-item {
+  color: #e6e6e6 !important;
+}
+
+.dropdown-item:hover {
+  background-color: #1a73e8 !important;
+  color: white !important;
+}
+
+/* Contrast Utilities */
+.high-contrast-text {
+  color: #ffffff !important;
+}
+
+.light-text {
+  color: #e6e6e6 !important;
+}
+
+.dark-text-on-light {
+  color: #333333 !important;
+}
+
+/* Background Utilities */
+.slightly-lighter-bg {
+  background-color: #121212 !important;
+}
+
+.highlight-bg {
+  background-color: #1e1e1e !important;
+}
+
+/* Icon Styling */
+.bi {
+  color: #e6e6e6; /* Light gray icons by default */
+}
+
+.bi-primary {
+  color: #1a73e8; /* Blue for primary icons */
+}
+
+.bi-success {
+  color: #4caf50; /* Green for success icons */
+}
+
+/* Force all text to be visible */
+* {
+  color: inherit;
+}
+
+/* Special cases for form labels */
+label {
+  color: #e6e6e6 !important;
 }

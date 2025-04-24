@@ -5,28 +5,30 @@ const SearchHistory = ({ history, onSelect }) => {
   if (!history || history.length === 0) return null;
 
   return (
-    <div className="mt-5">
-      <div className="card shadow-sm border-0">
-        <div className="card-header bg-primary text-white">
-          <h5 className="mb-0">Search History</h5>
+    <div className="mt-3">
+      <div className="card shadow-sm">
+        <div className="card-header bg-light">
+          <h6 className="mb-0">
+            <i className="bi bi-clock-history me-2"></i>
+            Recent Searches
+          </h6>
         </div>
-        <ul className="list-group list-group-flush">
+        <div className="list-group list-group-flush">
           {history.map((user, index) => (
-            <li
+            <button
               key={index}
-              className="list-group-item list-group-item-action"
-              style={{
-                cursor: 'pointer',
-                transition: 'background-color 0.2s ease',
-              }}
+              type="button"
+              className="list-group-item list-group-item-action d-flex align-items-center"
               onClick={() => onSelect(user)}
-              onMouseOver={(e) => e.currentTarget.classList.add('bg-light')}
-              onMouseOut={(e) => e.currentTarget.classList.remove('bg-light')}
             >
-              <i className="bi bi-person-circle me-2"></i> {user}
-            </li>
+              <i className="bi bi-person-circle me-2"></i>
+              <span className="text-truncate">{user}</span>
+              <span className="ms-auto badge bg-secondary rounded-pill">
+                #{index + 1}
+              </span>
+            </button>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

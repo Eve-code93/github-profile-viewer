@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
-      <div className="container">
+    <nav className="navbar navbar-expand-lg shadow-sm" style={{ backgroundColor: 'rgba(12, 8, 8, 0.9)' }}>
+      <div className="container-fluid">
         {/* Navbar toggler for mobile */}
         <button
           className="navbar-toggler"
@@ -17,24 +17,26 @@ const NavBar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        
-        {/* Links aligned to the left */}
+
+        {/* Navbar links */}
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto"> {/* me-auto aligns the nav items to the left */}
-            <li className="nav-item">
+          <ul className="navbar-nav mx-auto d-flex align-items-center">
+            <li className="nav-item mx-2">
               <NavLink
                 to="/"
-                className="nav-link fs-5 text-white mx-3 py-2 px-4 rounded-3 hover-effect"
-                activeClassName="active"
+                className={({ isActive }) => 
+                  `nav-link fw-semibold fs-5 px-3 py-2 rounded-pill ${isActive ? 'active' : ''}`
+                }
               >
                 Home
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item mx-2">
               <NavLink
                 to="/about"
-                className="nav-link fs-5 text-white mx-3 py-2 px-4 rounded-3 hover-effect"
-                activeClassName="active"
+                className={({ isActive }) => 
+                  `nav-link fw-semibold fs-5 px-3 py-2 rounded-pill ${isActive ? 'active' : ''}`
+                }
               >
                 About
               </NavLink>
@@ -42,6 +44,47 @@ const NavBar = () => {
           </ul>
         </div>
       </div>
+
+      {/* CSS Styles */}
+      <style>{`
+        .nav-link {
+          color: #333;
+          position: relative;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+        
+        .nav-link:hover {
+          color: #4a8fe7;
+          transform: translateY(-2px);
+        }
+        
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: 0;
+          left: 50%;
+          background-color: #4a8fe7;
+          transition: all 0.3s ease;
+          transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+          width: 70%;
+        }
+        
+        .nav-link.active {
+          color: #4a8fe7;
+          background-color: rgba(74, 143, 231, 0.1);
+        }
+        
+        .navbar {
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+        }
+      `}</style>
     </nav>
   );
 };

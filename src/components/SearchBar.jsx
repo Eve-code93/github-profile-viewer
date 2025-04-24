@@ -1,31 +1,51 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SearchHistory from './SearchHistory';
 
-const SearchBar = ({ onSearch }) => {
-  const [searchInput, setSearchInput] = useState('');
+const SearchBar = ({ history = [], onAddToHistory }) => {
+  const [query, setQuery] = useState('');
+  const [showHistory, setShowHistory] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!searchInput.trim()) return;
-    
-    await onSearch(searchInput);
-    navigate('/profile');
+    if (query.trim()) {
+      onAddToHistory(query.trim());
+      navigate(`/users/${query}`);
+      setQuery('');
+      setShowHistory(false);
+    }
+  };
+
+  const handleHistorySelect = (username) => {
+    setQuery(username);
+    navigate(`/users/${username}`);
+    setShowHistory(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="d-flex justify-content-center mt-4 mb-4">
-      <input
-        type="text"
-        placeholder="Enter GitHub username"
-        className="form-control w-50 me-2"
-        value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)}
-      />
-      <button type="submit" className="btn btn-primary">
-        Show Profile
-      </button>
-    </form>
+    <div className="search-container">
+      <form onSubmit={handleSubmit} className="d-flex mb-3">
+        <input
+          type="text"
+          className="form-control me-2"
+          placeholder="Enter GitHub username"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => setShowHistory(true)}
+        />
+        <button className="btn btn-primary" type="submit">
+          Search
+        </button>
+      </form>
+
+      {showHistory && (
+        <SearchHistory 
+          history={history} 
+          onSelect={handleHistorySelect} 
+        />
+      )}
+    </div>
   );
 };
 

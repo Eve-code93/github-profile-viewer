@@ -1,92 +1,108 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
- 
-import SearchBar from './components/SearchBar';
-import ErrorMessage from './components/ErrorMessage';
+// Component imports
 import Home from './components/Home';
+import About from './components/About';
 import ProfileOverview from './components/ProfileOverview';
 import RepoCard from './components/RepoCard';
 import Followers from './components/Followers';
 import Following from './components/Following';
-import About from './components/About';
-import Layout from "./components/Layout";
-import NavBar from './components/NavBar';
+import SearchBar from './components/SearchBar';
+import SearchHistory from './components/SearchHistory'; // Added this import
+import Layout from './components/Layout';
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
-  const [repos, setRepos] = useState([]);
-  const [followers, setFollowers] = useState([]);
-  const [following, setFollowing] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
   const [searchHistory, setSearchHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
-  const fetchGitHubData = async (user) => {
-    setUsername(user);
-    setError('');
-    setUserData(null);
-    setRepos([]);
-    setFollowers([]);
-    setFollowing([]);
-
-    try {
-      const response = await fetch(`https://api.github.com/users/${user}`);
-      if (!response.ok) throw new Error('User not found');
-      const data = await response.json();
-      setUserData(data);
-
-      const [reposRes, followersRes, followingRes] = await Promise.all([
-        fetch(data.repos_url),
-        fetch(data.followers_url),
-        fetch(`https://api.github.com/users/${user}/following`)
-      ]);
-
-      const [reposData, followersData, followingData] = await Promise.all([
-        reposRes.json(),
-        followersRes.json(),
-        followingRes.json()
-      ]);
-
-      setRepos(reposData);
-      setFollowers(followersData);
-      setFollowing(followingData);
-      setSearchHistory(prev => [user, ...prev.filter(u => u !== user)]);
-    } catch (err) {
-      setError(err.message);
+  // Load search history from localStorage
+  useEffect(() => {
+    const savedHistory = localStorage.getItem('githubSearchHistory');
+    if (savedHistory) {
+      setSearchHistory(JSON.parse(savedHistory));
     }
+  }, []);
+
+  // Save search history to localStorage
+  useEffect(() => {
+    localStorage.setItem('githubSearchHistory', JSON.stringify(searchHistory));
+  }, [searchHistory]);
+
+  const addToHistory = (username) => {
+    setSearchHistory(prev => [
+      username,
+      ...prev.filter(item => item.toLowerCase() !== username.toLowerCase())
+    ].slice(0, 5));
+  };
+
+  const handleHistorySelect = (username) => {
+    // This would be handled by SearchBar component
   };
 
   return (
     <Router>
       <Layout>
-         
-        <SearchBar onSearch={fetchGitHubData} />
-         
-        <ErrorMessage message={error} />
-
-        
         <Routes>
-           
-          <Route path="/" element={<Home />} />
-
-           
-          <Route path="/profile" element={<ProfileOverview user={userData} history={searchHistory}/>} />
-
+          <Route 
+            path="/" 
+            element={
+              <div className="container">
+                <div className="row justify-content-center">
+                  <div className="col-md-8">
+                    <SearchBar 
+                      history={searchHistory}
+                      onAddToHistory={addToHistory}
+                      onShowHistory={() => setShowHistory(true)}
+                      onHideHistory={() => setShowHistory(false)}
+                    />
+                    {showHistory && searchHistory.length > 0 && (
+                      <SearchHistory 
+                        history={searchHistory} 
+                        onSelect={handleHistorySelect} 
+                      />
+                    )}
+                    <Home />
+                  </div>
+                </div>
+              </div>
+            } 
+          />
           
-          <Route path="/profile/repos" element={<RepoCard repos={repos} />} />
-          <Route path="/profile/followers" element={<Followers users={followers} />} />
-          <Route path="/profile/following" element={<Following users={following} />} />
-
-           
           <Route path="/about" element={<About />} />
+          
+          <Route 
+            path="/users/:username" 
+            element={<ProfileOverview onError={setError} />} 
+          />
+          
+          <Route 
+            path="/users/:username/repos" 
+            element={<RepoCard onError={setError} />} 
+          />
+          
+          <Route 
+            path="/users/:username/followers" 
+            element={<Followers onError={setError} />} 
+          />
+          
+          <Route 
+            path="/users/:username/following" 
+            element={<Following onError={setError} />} 
+          />
         </Routes>
+        
+        {error && (
+          <div className="alert alert-danger mt-3">
+            {error}
+          </div>
+        )}
       </Layout>
     </Router>
   );
 }
 
 export default App;
- 
- 

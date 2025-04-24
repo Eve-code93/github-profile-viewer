@@ -1,35 +1,37 @@
 import React from 'react';
-import NavBar from './NavBar'; //
+import NavBar from './NavBar';
 
-/**
- * Layout component serves as the overall wrapper for pages.
- * It includes a header with logo and title, a main content area, and a footer.
- */
 const Layout = ({ children }) => {
   return (
-    <div className="min-vh-100 bg-light d-flex flex-column">
-      {/* Header with GitHub logo */}
-      <header className="bg-white shadow-sm py-3">
-        <div className="container d-flex justify-content-center align-items-center">
-          <img
-            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-            alt="GitHub Logo"
-            width="40"
-            height="40"
-          />
-          <h1 className="ms-3 mb-0">GitHub Profile Viewer</h1>
+    <div className="d-flex flex-column min-vh-100">
+      <header className="bg-black shadow-sm">
+        <div className="container">
+          <div className="d-flex justify-content-center align-items-center py-2">
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="GitHub Logo"
+              width="32"
+              height="32"
+              className="me-2"
+            />
+            <h1 className="h5 mb-0">GitHub Profile Viewer</h1>
+          </div>
+          <NavBar />
         </div>
-        <NavBar />
       </header>
 
-      {/* Main content area */}
-      <main className="container my-4 flex-grow-1">
-        {children}
+      <main className="flex-grow-1 py-3">
+        <div className="container">
+          {children}
+        </div>
       </main>
 
-      {/* Footer */}
-      <footer className="mt-auto bg-white text-center py-3 shadow-sm">
-        <small className="text-muted">&copy; {new Date().getFullYear()} GitHub Profile Viewer</small>
+      <footer className="bg-black py-2 shadow-sm">
+        <div className="container text-center">
+          <small className="text-muted">
+            &copy; {new Date().getFullYear()} GitHub Profile Viewer
+          </small>
+        </div>
       </footer>
     </div>
   );
