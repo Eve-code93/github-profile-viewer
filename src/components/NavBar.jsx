@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   return (
+<<<<<<< HEAD
     <nav >
       <div >
         <Link  to="/">GitHub Viewer</Link>
@@ -20,6 +21,11 @@ const NavBar = () => {
           </ul>
         </div>
       </div>
+=======
+    <nav className="text-center mt-2">
+      <Link to="/">Home</Link> |{' '}
+      <Link to="/about">About</Link>
+>>>>>>> dev
     </nav>
   );
 };

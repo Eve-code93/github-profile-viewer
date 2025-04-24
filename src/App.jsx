@@ -21,6 +21,7 @@ function App() {
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
   const [error, setError] = useState('');
+  const [searchHistory, setSearchHistory] = useState([]);
 
   const fetchGitHubData = async (user) => {
     setUsername(user);
@@ -51,6 +52,7 @@ function App() {
       setRepos(reposData);
       setFollowers(followersData);
       setFollowing(followingData);
+      setSearchHistory(prev => [user, ...prev.filter(u => u !== user)]);
     } catch (err) {
       setError(err.message);
     }
@@ -70,7 +72,7 @@ function App() {
           <Route path="/" element={<Home />} />
 
           {/* Profile overview route */}
-          <Route path="/profile" element={<ProfileOverview user={userData} />} />
+          <Route path="/profile" element={<ProfileOverview user={userData} history={searchHistory}/>} />
 
           {/* Additional data routes */}
           <Route path="/profile/repos" element={<RepoCard repos={repos} />} />

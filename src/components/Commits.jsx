@@ -4,7 +4,7 @@ const Commits = ({ commits }) => {
   return (
     <div>
       <h2>Recent Commits</h2>
-      <ul>
+      <ul>git 
         {commits && commits.length > 0 ? (
           commits.map((commit, index) => (
             <li key={index}>
