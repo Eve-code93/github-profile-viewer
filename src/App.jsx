@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Layout from './components/Layout';
 import SearchBar from './components/SearchBar';
+import ErrorMessage from './components/ErrorMessage';
+import Home from './components/Home';
 import ProfileOverview from './components/ProfileOverview';
 import RepoCard from './components/RepoCard';
 import Followers from './components/Followers';
 import Following from './components/Following';
-import ErrorMessage from './components/ErrorMessage';
-import Home from './components/Home';
 import About from './components/About';
 
-const App = () => {
+function App() {
   const [username, setUsername] = useState('');
   const [userData, setUserData] = useState(null);
   const [repos, setRepos] = useState([]);
@@ -18,8 +20,8 @@ const App = () => {
   const [following, setFollowing] = useState([]);
   const [error, setError] = useState('');
 
-  const fetchGitHubData = async (username) => {
-    setUsername(username);
+  const fetchGitHubData = async (user) => {
+    setUsername(user);
     setError('');
     setUserData(null);
     setRepos([]);
@@ -27,49 +29,59 @@ const App = () => {
     setFollowing([]);
 
     try {
-      const userRes = await fetch(`https://api.github.com/users/${username}`);
-      if (!userRes.ok) throw new Error('GitHub user not found');
-      const user = await userRes.json();
+      const response = await fetch(`https://api.github.com/users/${user}`);
+      if (!response.ok) throw new Error('User not found');
+      const data = await response.json();
+      setUserData(data);
 
-      const [repoRes, followerRes, followingRes] = await Promise.all([
-        fetch(user.repos_url),
-        fetch(user.followers_url),
-        fetch(`https://api.github.com/users/${username}/following`),
+      const [reposRes, followersRes, followingRes] = await Promise.all([
+        fetch(data.repos_url),
+        fetch(data.followers_url),
+        fetch(`https://api.github.com/users/${user}/following`)
       ]);
 
-      const [repos, followers, following] = await Promise.all([
-        repoRes.json(),
-        followerRes.json(),
-        followingRes.json(),
+      const [reposData, followersData, followingData] = await Promise.all([
+        reposRes.json(),
+        followersRes.json(),
+        followingRes.json()
       ]);
 
-      setUserData(user);
-      setRepos(repos);
-      setFollowers(followers);
-      setFollowing(following);
+      setRepos(reposData);
+      setFollowers(followersData);
+      setFollowing(followingData);
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="container mt-4">
-      <Router>
+    <Router>
+      <Layout>
+        {/* Search bar always visible */}
+        <SearchBar onSearch={fetchGitHubData} />
+        {/* Show error if any */}
+        <ErrorMessage message={error} />
+
+        {/* Define routes */}
         <Routes>
-          <Route path="/" element={<Home onSearch={fetchGitHubData} />} />
+          {/* Home page: introductory or empty state */}
+          <Route path="/" element={<Home />} />
+
+          {/* Profile overview route */}
           <Route path="/profile" element={<ProfileOverview user={userData} />} />
+
+          {/* Additional data routes */}
+          <Route path="/profile/repos" element={<RepoCard repos={repos} />} />
+          <Route path="/profile/followers" element={<Followers users={followers} />} />
+          <Route path="/profile/following" element={<Following users={following} />} />
+
+          {/* About page */}
           <Route path="/about" element={<About />} />
         </Routes>
-
-        <SearchBar onSearch={fetchGitHubData} />
-        <ErrorMessage message={error} />
-        {userData && <ProfileOverview user={userData} />}
-        {repos.length > 0 && <RepoCard repos={repos} />}
-        {followers.length > 0 && <Followers users={followers} />}
-        {following.length > 0 && <Following users={following} />}
-      </Router>
-    </div>
+      </Layout>
+    </Router>
   );
-};
+}
 
 export default App;
+// This code is a React application that fetches and displays GitHub user data.

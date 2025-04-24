@@ -1,10 +1,9 @@
 import React from 'react';
 
-const Home = ({ onSearch }) => {
+const Home = () => {
   return (
-    <div>
-      <h2>Home</h2>
-      {/* You can add input field or logic to call onSearch here */}
+    <div className="home">
+      {/* This component is now blank and can be styled as needed */}
     </div>
   );
 };
