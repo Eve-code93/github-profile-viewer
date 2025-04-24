@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-//import Layout from './components/Layout';
+ 
 import SearchBar from './components/SearchBar';
 import ErrorMessage from './components/ErrorMessage';
 import Home from './components/Home';
@@ -61,25 +61,25 @@ function App() {
   return (
     <Router>
       <Layout>
-        {/* Search bar always visible */}
+         
         <SearchBar onSearch={fetchGitHubData} />
-        {/* Show error if any */}
+         
         <ErrorMessage message={error} />
 
-        {/* Define routes */}
+        
         <Routes>
-          {/* Home page: introductory or empty state */}
+           
           <Route path="/" element={<Home />} />
 
-          {/* Profile overview route */}
+           
           <Route path="/profile" element={<ProfileOverview user={userData} history={searchHistory}/>} />
 
-          {/* Additional data routes */}
+          
           <Route path="/profile/repos" element={<RepoCard repos={repos} />} />
           <Route path="/profile/followers" element={<Followers users={followers} />} />
           <Route path="/profile/following" element={<Following users={following} />} />
 
-          {/* About page */}
+           
           <Route path="/about" element={<About />} />
         </Routes>
       </Layout>
@@ -88,4 +88,5 @@ function App() {
 }
 
 export default App;
-// This code is a React application that fetches and displays GitHub user data.
+ 
+ 

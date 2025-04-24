@@ -1,8 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Following = ({ users }) => {
+const Following = ({ users, className, style }) => {
+  if (!users || users.length === 0) {
+    return <div>No following users found.</div>;
+  }
+
   return (
-    <div>
+    <div className={className} style={style}>
       <h2>Following</h2>
       <ul>
         {users.map((user) => (
@@ -11,6 +16,18 @@ const Following = ({ users }) => {
       </ul>
     </div>
   );
+};
+
+// Prop validation
+Following.propTypes = {
+  users: PropTypes.array.isRequired,
+  className: PropTypes.string,
+  style: PropTypes.object,
+};
+
+Following.defaultProps = {
+  className: '',
+  style: {},
 };
 
 export default Following;
