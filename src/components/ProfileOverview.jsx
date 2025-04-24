@@ -4,7 +4,7 @@ const ProfileOverview = ({ user, history }) => {
   if (!user) return null;
 
   return (
-    <div className="profile-overview">
+    <div className="profile-overview pb-5">
       <h2>{user.name}</h2>
       <img src={user.avatar_url} alt={user.login} width="150" height="150" />
       <p>Username: {user.login}</p>
@@ -18,13 +18,19 @@ const ProfileOverview = ({ user, history }) => {
       </a>
       {/*search history */}
       {history?.length > 0 && (
-        <div className="mt-4">
-          <h5>Search History</h5>
-          <ul>
-            {history.map((u, i) => (
-              <li key={i}>{u}</li>
-            ))}
-          </ul>
+        <div className="mt-5">
+          <div className="card">
+            <div className="card-header bg-primary text-white">
+              Search History
+            </div>
+            <ul className="list-group list-group-flush">
+              {history.map((u, i) => (
+                <li className="list-group-item" key={i}>
+                  {u}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>
