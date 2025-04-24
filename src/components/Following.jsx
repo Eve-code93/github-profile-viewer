@@ -1,33 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const Following = ({ users, className, style }) => {
+const Following = ({ users }) => {
+  // Handle the case where there are no following users
   if (!users || users.length === 0) {
-    return <div>No following users found.</div>;
+    return <p>No following users found.</p>;
   }
 
+  // Render the list of users being followed
   return (
-    <div className={className} style={style}>
-      <h2>Following</h2>
-      <ul>
+    <div className="container py-4">
+      <h2 className="text-center mb-4">Following</h2>
+      <ul className="list-group">
         {users.map((user) => (
-          <li key={user.id}>{user.login}</li>
+          <li key={user.id} className="list-group-item d-flex align-items-center">
+            {/* Profile image */}
+            <img
+              src={user.avatar_url}
+              alt={user.login}
+              className="rounded-circle me-3"
+              width="48"
+              height="48"
+            />
+            {/* GitHub profile link */}
+            <a
+              href={`https://github.com/${user.login}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-decoration-none text-primary fw-bold"
+            >
+              {user.login}
+            </a>
+          </li>
         ))}
       </ul>
     </div>
   );
-};
-
-// Prop validation
-Following.propTypes = {
-  users: PropTypes.array.isRequired,
-  className: PropTypes.string,
-  style: PropTypes.object,
-};
-
-Following.defaultProps = {
-  className: '',
-  style: {},
 };
 
 export default Following;

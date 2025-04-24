@@ -8,7 +8,6 @@ const ProfileOverview = ({ user, history }) => {
     <div className="container py-5">
       <div className="card shadow-lg">
         <div className="row g-0">
-          
           {/* Left Column: Profile Info */}
           <div className="col-md-7 p-4 border-end">
             <div className="text-center text-md-start">
@@ -40,12 +39,21 @@ const ProfileOverview = ({ user, history }) => {
           {/* Right Column: Stats & History */}
           <div className="col-md-5 p-4">
             <h5 className="mb-4">Connections</h5>
-
             <div className="d-flex justify-content-between mb-3 flex-wrap gap-2">
               <StatCard label="Public Repos" value={user.public_repos} color="warning" />
               <StatCard label="Followers" value={user.followers} color="success" />
               <StatCard label="Following" value={user.following} color="danger" />
               <StatCard label="Public Gists" value={user.public_gists || 0} color="info" />
+            </div>
+
+            <div className="mt-3">
+              {/* Buttons for Followers and Following */}
+              <a href="/profile/followers" className="btn btn-success me-2">
+                View Followers
+              </a>
+              <a href="/profile/following" className="btn btn-danger">
+                View Following
+              </a>
             </div>
 
             {history?.length > 0 && (
@@ -68,7 +76,6 @@ const ProfileOverview = ({ user, history }) => {
               </div>
             )}
           </div>
-
         </div>
       </div>
     </div>
@@ -114,5 +121,3 @@ StatCard.propTypes = {
 };
 
 export default ProfileOverview;
-
- 
