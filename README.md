@@ -24,7 +24,7 @@ A React application that lets you search for GitHub users and view their profile
 
 ## Live Demo
 
-[View Live on Vercel](https://github-profile-viewer.vercel.app) <!-- Update with your actual URL -->
+[View Live on Vercel](https://github-profile-viewer-rosy.vercel.app/) 
 
 ## Installation
 
